@@ -6,6 +6,8 @@
   color: #dd1100;
   font-weight: 500;
   align-items: center;
+  position: relative;
+  z-index: 10;
   .highlight {
     font-weight: 300;
     color: #f57e02;
