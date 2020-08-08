@@ -1,0 +1,53 @@
+.modal {
+  position: fixed;
+  z-index: 500;
+  background-color: white;
+  width: 70%;
+  border: 1px solid #ccc;
+  border-radius: 1rem;
+  box-shadow: 1px 1px 5px black;
+  padding: 16px;
+  left: 50%;
+  top: 50%;
+  box-sizing: border-box;
+  transition: all 0.3s ease-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 0;
+  & > h1 {
+    color: #dd1100;
+    font-size: 3rem;
+    margin-bottom: 3rem;
+    font-weight: 400;
+  }
+
+  .modal-content {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+}
+
+.backdrop {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.hide {
+  display: none;
+}
+
+@media (min-width: 600px) {
+  .modal {
+    width: 500px;
+    left: calc(50% - 250px);
+  }
+}
