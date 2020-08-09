@@ -63,7 +63,7 @@ export default function HomePage() {
           onClick={(event) =>
             !name || !classNo ? event.preventDefault() : null
           }
-          to={`/live?name=${name}&class=${classNo}`}
+          to={`/live?name=${name}&classNo=${classNo}`}
         >
           <CustomButton>Join Class</CustomButton>
         </Link>
@@ -84,7 +84,7 @@ export default function HomePage() {
 
         <Link
           onClick={(event) => (!newClass ? event.preventDefault() : null)}
-          to={`/live?name=teacher&class=${newClass}`}
+          to={`/live?name=teacher&classNo=${newClass}`}
         >
           <CustomButton>Start Class</CustomButton>
         </Link>

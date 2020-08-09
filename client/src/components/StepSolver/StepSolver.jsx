@@ -12,7 +12,7 @@ export default function StepSolver() {
   const solImg = useRef(null);
 
   const handleSubmit = async () => {
-    const url = `http://localhost:3005/solve?exp=${exp}`;
+    const url = `http://localhost:3006/solve?exp=${exp}`;
     const res = await axios.post(url);
     console.log(exp);
     // console.log(res.data);
