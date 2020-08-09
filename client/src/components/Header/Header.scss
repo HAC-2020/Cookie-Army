@@ -21,3 +21,25 @@
     cursor: pointer;
   }
 }
+
+.hide {
+  display: none;
+}
+
+.dropdown {
+  position: absolute;
+  right: 2rem;
+  top: 9rem;
+  width: 30rem;
+  height: 40rem;
+  background-color: #fff;
+  border: 2px solid #000;
+  box-shadow: 1rem 1rem 15rem rgba(0, 0, 0, 0.486);
+  padding: 1rem;
+  a {
+    color: grey;
+    &:hover {
+      color: #f57e02;
+    }
+  }
+}

@@ -4,6 +4,8 @@ import io from 'socket.io-client';
 import Peer from 'peerjs';
 import './LivePage.scss';
 import StepSolver from '../../components/StepSolver/StepSolver';
+import firebase from '../../firebase/firebaseUtils';
+import { v4 as uuidV4 } from 'uuid';
 
 let socket;
 let myVideo;
@@ -127,10 +129,16 @@ export default function LivePage({ location }) {
     mediaRecorder.onstop = (event) => {
       let blob = new Blob(chunks, { type: 'video/mp4;' });
       let videoUrl = window.URL.createObjectURL(blob);
-      const recVideo = document.createElement('video');
-      recVideo.src = videoUrl;
-      recVideo.controls = true;
-      videoGrid.current.append(recVideo);
+      // const recVideo = document.createElement('video');
+      // recVideo.src = videoUrl;
+      // recVideo.controls = true;
+      // videoGrid.current.append(recVideo);
+      var storageRef = firebase.storage().ref();
+      var videosRef = storageRef.child(`videos/${uuidV4()}`);
+      var file = blob;
+      videosRef.put(file).then(function (snapshot) {
+        alert('recording uploaded');
+      });
     };
   };
 
