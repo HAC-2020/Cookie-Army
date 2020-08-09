@@ -9,6 +9,8 @@ let socket;
 let myVideo;
 let myVideoStream;
 const peerObj = {};
+let mediaRecorder;
+let chunks = [];
 
 const addVideoStream = (video, stream, videoGrid) => {
   video.srcObject = stream;
@@ -26,6 +28,7 @@ export default function LivePage({ location }) {
   const [peers, setPeers] = useState('');
   const ENDPOINT = `localhost:3006`;
   const videoGrid = useRef(null);
+  const [recState, setRecState] = useState(false);
 
   const connectToNewUser = (myPeer, userId, stream, videoGrid) => {
     const call = myPeer.call(userId, stream);
@@ -77,6 +80,7 @@ export default function LivePage({ location }) {
       })
       .then((stream) => {
         myVideoStream = stream;
+        mediaRecorder = new MediaRecorder(myVideoStream);
         addVideoStream(myVideo, stream, videoGrid);
 
         myPeer.on('call', (call) => {
@@ -106,6 +110,30 @@ export default function LivePage({ location }) {
     else myVideoStream.getVideoTracks()[0].enabled = true;
   };
 
+  const toggleRecording = () => {
+    setRecState(!recState);
+
+    if (!recState) {
+      mediaRecorder.start();
+      console.log(mediaRecorder.state);
+    } else {
+      mediaRecorder.stop();
+      console.log(mediaRecorder.state);
+    }
+
+    mediaRecorder.ondataavailable = function (event) {
+      chunks.push(event.data);
+    };
+    mediaRecorder.onstop = (event) => {
+      let blob = new Blob(chunks, { type: 'video/mp4;' });
+      let videoUrl = window.URL.createObjectURL(blob);
+      const recVideo = document.createElement('video');
+      recVideo.src = videoUrl;
+      recVideo.controls = true;
+      videoGrid.current.append(recVideo);
+    };
+  };
+
   return (
     <div className="live-page">
       <div className="grid-container">
@@ -113,15 +141,21 @@ export default function LivePage({ location }) {
         <div className="control-bar">
           <button onClick={() => toggleMute()}>
             <i
-              class={` ${
+              className={` ${
                 mute ? 'fas fa-microphone-slash' : 'fas fa-microphone'
               }`}
             ></i>
           </button>
           <button onClick={() => toggleVideo()}>
             <i
-              class={` ${playVideo ? 'fas fa-video' : 'fas fa-video-slash'}`}
+              className={` ${
+                playVideo ? 'fas fa-video' : 'fas fa-video-slash'
+              }`}
             ></i>
+          </button>
+          <button onClick={() => toggleRecording()}>
+            {' '}
+            {`${recState ? '\u25A0' + 'Recording' : '\u25B6Record'}`}{' '}
           </button>
         </div>
       </div>
