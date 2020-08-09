@@ -1,0 +1,51 @@
+.home-page {
+  padding: 3rem 6rem;
+  min-height: calc(100vh - 7.5rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f7f7f7;
+
+  .hero {
+    min-height: 40rem;
+    display: flex;
+    align-items: center;
+
+    .hero-text {
+      width: 50%;
+
+      .hero-heading {
+        font-size: 4rem;
+        margin-bottom: 2rem;
+        .strike {
+          text-decoration: line-through;
+          text-decoration-color: #dd1100;
+        }
+      }
+
+      .hero-subtext {
+        font-size: 2rem;
+      }
+
+      .btn-container {
+        margin-top: 4rem;
+        display: flex;
+        width: 80%;
+        justify-content: space-around;
+      }
+    }
+
+    .image {
+      height: 45rem;
+      width: 40%;
+      margin-left: 3rem;
+      //   border: 1px solid;
+
+      img {
+        height: 100%;
+        width: 100%;
+      }
+    }
+  }
+}
