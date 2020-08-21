@@ -14,6 +14,8 @@ const peerObj = {};
 let mediaRecorder;
 let chunks = [];
 
+// let users = {};
+
 const addVideoStream = (video, stream, videoGrid) => {
   video.srcObject = stream;
   video.addEventListener('loadedmetadata', () => {
@@ -27,8 +29,8 @@ export default function LivePage({ location }) {
   const [classNoState, setClassNo] = useState('');
   const [mute, setMute] = useState(false);
   const [playVideo, setPlayVideo] = useState(false);
-  const [peers, setPeers] = useState('');
-  const ENDPOINT = `localhost:3006`;
+  // const [peers, setPeers] = useState('');
+  const ENDPOINT = `/`;
   const videoGrid = useRef(null);
   const [recState, setRecState] = useState(false);
 
@@ -45,7 +47,7 @@ export default function LivePage({ location }) {
     });
 
     // console.log(userId, call);
-    setPeers({ ...peers, [userId]: call });
+    // setPeers({ ...peers, [userId]: call });
     peerObj[userId] = call;
     console.log(peerObj);
   };
@@ -83,6 +85,7 @@ export default function LivePage({ location }) {
       .then((stream) => {
         myVideoStream = stream;
         mediaRecorder = new MediaRecorder(myVideoStream);
+        myVideoStream.getAudioTracks()[0].enabled = false;
         addVideoStream(myVideo, stream, videoGrid);
 
         myPeer.on('call', (call) => {
@@ -101,13 +104,14 @@ export default function LivePage({ location }) {
 
   const toggleMute = () => {
     setMute(!mute);
-    console.log(myVideoStream);
+    console.log(myVideoStream, myVideoStream.getAudioTracks()[0]);
     if (mute) myVideoStream.getAudioTracks()[0].enabled = false;
     else myVideoStream.getAudioTracks()[0].enabled = true;
   };
 
   const toggleVideo = () => {
     setPlayVideo(!playVideo);
+    console.log(myVideoStream, myVideoStream.getVideoTracks()[0]);
     if (!playVideo) myVideoStream.getVideoTracks()[0].enabled = false;
     else myVideoStream.getVideoTracks()[0].enabled = true;
   };

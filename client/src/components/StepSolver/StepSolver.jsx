@@ -4,6 +4,7 @@ import './StepSolver.scss';
 import CustomInput from '../CustomInput/CustomInput';
 import CustomButton from '../CustomButton/CustomButton';
 import axios from 'axios';
+import $ from 'jquery';
 
 export default function StepSolver() {
   const [solSrc, setSolSrc] = useState('');
@@ -12,21 +13,28 @@ export default function StepSolver() {
   const solImg = useRef(null);
 
   const handleSubmit = async () => {
-    const url = `http://localhost:3006/solve?exp=${exp}`;
+    const urlExp = encodeURIComponent(exp);
+    const url = `https://alphaclass.herokuapp.com/solve?exp=${urlExp}`;
     const res = await axios.post(url);
     console.log(exp);
     // console.log(res.data);
 
-    let parser = new DOMParser();
-    let xmlDoc = parser.parseFromString(res.data, 'text/xml');
-    console.log(xmlDoc);
+    // let parser = new DOMParser();
+    // let xmlDoc = parser.parseFromString(res.data, 'text/xml');
+    // console.log(xmlDoc);
 
-    const resImage = xmlDoc.querySelector(
-      '#Result > subpod:nth-child(2) > img'
+    // const resImage = xmlDoc.querySelector(
+    //   '#Result > subpod:nth-child(2) > img'
+    // );
+
+    const jQXmlDoc = $.parseXML(res.data);
+    console.log('jq', jQXmlDoc);
+    const jImg = $(jQXmlDoc).find(
+      "subpod[title='Possible intermediate steps'] img"
     );
-
+    console.log('jimg', jImg.attr('src'));
     // console.log(resImage.getAttribute('src'));
-    setSolSrc(resImage.getAttribute('src'));
+    setSolSrc(jImg.attr('src'));
     // console.log(solImg);
     solImg.current.classList = [];
 

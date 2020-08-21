@@ -23,10 +23,9 @@ export default function HomePage() {
           </div>
           <div className="hero-subtext">
             Alpha Class is a virtual classroom, with features to give students a
-            better learning experience during this pandemic. Features like live
-            stream captioning, step by step problem solver, video streaming of
-            previous lectures sets it apart from any other video conferencing
-            app out there.
+            better learning experience during this pandemic. Features like step
+            by step problem solver, video streaming of previous lectures sets it
+            apart from any other video conferencing app out there.
           </div>
           <div className="btn-container">
             <CustomButton onClick={() => setShowJoinModal(true)}>
